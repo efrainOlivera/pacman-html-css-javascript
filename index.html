@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pacman Demo</title>
+		<link rel="stylesheet" type="text/css" href="pacstyle.css">
+	</head>
+	<body>
+		<div id=></div>
+		<div id='world'></div>
+		<div id='pac'></div>
+		<div id="score">0</div>
+
+		<!-- list of features to build
+		1 Have JS display the world of brick/coin/etc completed.
+		2 Have the pacman move up and down  completed. -->
+ 
+		<script>
+
+		var world = [
+			[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+			[2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2],
+			[2,1,2,1,2,2,1,2,1,2,2,1,2,2,1,2,2,2,1,2,1,2,1,2],
+			[2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2],
+			[2,2,1,2,1,2,2,1,2,1,2,1,2,1,2,2,1,2,2,1,2,2,1,2],
+			[2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2],
+			[2,1,2,2,1,2,2,2,2,1,2,2,1,2,2,1,2,2,1,2,1,2,2,2],
+			[2,1,1,2,1,2,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,2,1,2],
+			[2,2,1,1,1,1,1,1,2,1,2,1,1,1,2,1,1,1,2,1,1,2,1,2],
+			[2,1,2,2,1,2,2,2,1,2,2,1,2,1,2,2,1,2,2,2,1,2,1,2],
+			[2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2],
+			[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+		];
+		var score = 0;
+
+		var pac = {
+			x: 1,
+			y: 1
+		}
+		function displayWorld(){
+			var output = "";
+
+			for(var i = 0; i<world.length; i++){
+				output += '\n<div class="row">\n';
+				for(var j=0; j<world[i].length; j++){
+					if(world[i][j] == 2)
+						output += '<div class="brick"></div>';
+					else if(world[i][j] == 1)
+						output += '<div class="coin"></div>';
+					if(world[i][j] == 0)
+						output += '<div class="empty"></div>';
+				}
+				output += '\n</div>';
+			}
+			document.getElementById('world').innerHTML = output;
+		}
+		function displaypacman(argument) {
+			document.getElementById('pac').style.top = pac.y*24+"px"
+			document.getElementById('pac').style.left = pac.x*20+"px"
+		}
+		function displayScore(){
+			document.getElementById('score').innerHTML = score;
+		}
+		displayWorld();
+		displaypacman();
+		displayScore();
+		document.onkeydown = function(e){
+			if(e.keyCode == 37 && world[pac.y][pac.x-1] != 2){
+				pac.x--;
+
+
+			} 
+			else if(e.keyCode == 39 && world[pac.y][pac.x+1] != 2){
+				pac.x++;
+			}
+			else if(e.keyCode == 38 && world[pac.y-1][pac.x] != 2){
+				pac.y--;
+			}
+			else if(e.keyCode == 40 && world[pac.y+1][pac.x] != 2){
+				pac.y++;
+			}
+			if(world[pac.y][pac.x] == 1){
+				world[pac.y][pac.x] = 0;
+				score+=10;
+				displayWorld();
+				displayScore();
+			}
+			// console.log(e.keyCode);
+			displaypacman();
+		}
+		</script>
+	</body>
+</html>
